@@ -1,8 +1,8 @@
-# 📦 Inventory Management System
+# Inventory Management System
 
 A modern, elegant web application built with Flask for managing inventory across multiple warehouse locations.
 
-## ✨ Features
+##  Features
 
 - **Product Management**: Add, edit, view, and delete products
 - **Location Management**: Manage multiple warehouse locations
@@ -14,7 +14,7 @@ A modern, elegant web application built with Flask for managing inventory across
 - **Data Management**: Reset and reload sample data anytime
 - **Persistent Storage**: All data is saved in SQLite database (inventory.db)
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Python 3.7 or higher
@@ -42,34 +42,8 @@ The application will start on `http://127.0.0.1:5000/`
 - 5 Locations (2 Warehouses + 3 Retail Stores)
 - 30+ Product Movements (stock arrivals, transfers, sales)
 
-## 📁 Project Structure
-```
-inventory_app/
-│
-├── app.py                      # Main Flask application
-├── requirements.txt            # Python dependencies
-├── README.md                   # Project documentation
-│
-├── instance/
-│   └── inventory.db           # SQLite database (auto-created)
-│
-├── templates/                  # HTML templates
-│   ├── base.html              # Base template
-│   ├── index.html             # Dashboard
-│   ├── products.html          # Product list
-│   ├── product_form.html      # Add/Edit product
-│   ├── locations.html         # Location list
-│   ├── location_form.html     # Add/Edit location
-│   ├── movements.html         # Movement list
-│   ├── movement_form.html     # Add/Edit movement
-│   ├── report.html            # Inventory report
-│   └── data_management.html   # Data management
-│
-└── static/
-    └── style.css              # CSS styling
-```
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ### Product Table
 - `product_id` (Primary Key, VARCHAR)
@@ -89,7 +63,7 @@ inventory_app/
 - `product_id` (Foreign Key to Product)
 - `qty` (Integer)
 
-## 📊 Pre-loaded Sample Data
+##  Pre-loaded Sample Data
 
 ### Products (10 items)
 1. **PROD001** - Dell Laptop XPS 15
@@ -119,7 +93,7 @@ The sample data includes realistic inventory movements:
 
 **All this data is automatically loaded when you first run the app!**
 
-## 🔄 Data Management
+##  Data Management
 
 The application includes a **Data Management** page where you can:
 - View current database statistics
@@ -128,7 +102,7 @@ The application includes a **Data Management** page where you can:
 
 Access it from: **Dashboard → Data** (in the navigation menu)
 
-## 💾 Data Persistence
+##  Data Persistence
 
 - **Database**: SQLite (stored in `instance/inventory.db`)
 - **All changes are automatically saved** - No manual save needed!
@@ -136,7 +110,7 @@ Access it from: **Dashboard → Data** (in the navigation menu)
 - You can **add your own products** and they'll be saved permanently
 - Use the **Reset Database** feature to start fresh with sample data
 
-## 📸 Screenshots
+##  Screenshots
 
 ### Dashboard
 ![Dashboard](screenshots/dashboard.png)
@@ -162,7 +136,7 @@ Access it from: **Dashboard → Data** (in the navigation menu)
 ![Report](screenshots/report.png)
 *Balance report showing product quantities in each location*
 
-## 🎯 Usage Examples
+##  Usage Examples
 
 ### Creating Products
 1. Navigate to **Products** → **Add Product**
@@ -178,7 +152,7 @@ Access it from: **Dashboard → Data** (in the navigation menu)
 4. Add optional address
 5. Click **Add Location**
 
-## 📋 How to Add Your Own Data
+##  How to Add Your Own Data
 
 Want to add more data? Here's how:
 
@@ -220,7 +194,7 @@ Navigate to **Movements** → **Add Movement** and choose:
 
 **All your data is automatically saved to the database!**
 
-## 🎨 Design Highlights
+##  Design Highlights
 
 - **Color Scheme**: Modern purple/blue gradient theme
 - **Typography**: Clean, readable Segoe UI font
@@ -229,7 +203,7 @@ Navigate to **Movements** → **Add Movement** and choose:
 - **Animations**: Smooth hover effects and transitions
 - **Cards**: Beautiful card-based UI components
 
-## 🔧 Technical Details
+##  Technical Details
 
 ### Technologies Used
 - **Backend**: Flask 3.0.0
@@ -246,9 +220,9 @@ Navigate to **Movements** → **Add Movement** and choose:
 - **Auto-initialization**: Loads sample data on first run
 - **Data Persistence**: SQLite database for permanent storage
 
-## 🔒 Security Note
+##  Security Note
 
-⚠️ **Important**: This is a demonstration application. For production use:
+ **Important**: This is a demonstration application. For production use:
 - Change the `SECRET_KEY` in `app.py`
 - Use a production database (PostgreSQL/MySQL)
 - Add user authentication
@@ -256,7 +230,7 @@ Navigate to **Movements** → **Add Movement** and choose:
 - Add CSRF protection
 - Use environment variables for configuration
 
-## 📝 Notes
+##  Notes
 
 - **Movement Logic**: 
   - Leave "From Location" blank when receiving new stock
@@ -273,42 +247,3 @@ Navigate to **Movements** → **Add Movement** and choose:
   - Can be reset anytime from Data Management page
   - All user-added data is saved permanently
 
-## 🐛 Troubleshooting
-
-### Database Issues
-If you encounter database errors:
-```bash
-# Delete the database and restart
-rm instance/inventory.db
-python app.py
-```
-
-### Port Already in Use
-If port 5000 is busy:
-```python
-# Change in app.py, last line:
-app.run(debug=True, port=5001)
-```
-
-### Missing Dependencies
-```bash
-pip install --upgrade -r requirements.txt
-```
-
-### Sample Data Not Loading
-If sample data doesn't appear:
-1. Delete `instance/inventory.db`
-2. Restart the application
-3. Or use the "Reset Database" feature in Data Management page
-
-## 📧 Contact
-
-For questions or issues, contact: hr@aerele.in
-
-## 📄 License
-
-This project is created as a hiring test assignment.
-
----
-
-**Built with ❤️ using Flask**
