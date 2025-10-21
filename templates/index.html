@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+    <p class="subtitle">Overview of your inventory system</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card stat-products">
+        <div class="stat-icon">
+            <i class="fas fa-box"></i>
+        </div>
+        <div class="stat-details">
+            <h3>{{ products_count }}</h3>
+            <p>Total Products</p>
+        </div>
+    </div>
+
+    <div class="stat-card stat-locations">
+        <div class="stat-icon">
+            <i class="fas fa-warehouse"></i>
+        </div>
+        <div class="stat-details">
+            <h3>{{ locations_count }}</h3>
+            <p>Warehouse Locations</p>
+        </div>
+    </div>
+
+    <div class="stat-card stat-movements">
+        <div class="stat-icon">
+            <i class="fas fa-truck"></i>
+        </div>
+        <div class="stat-details">
+            <h3>{{ movements_count }}</h3>
+            <p>Total Movements</p>
+        </div>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+    <div class="action-grid">
+        <a href="{{ url_for('add_product') }}" class="action-card">
+            <i class="fas fa-plus-circle"></i>
+            <span>Add New Product</span>
+        </a>
+        <a href="{{ url_for('add_location') }}" class="action-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Add New Location</span>
+        </a>
+        <a href="{{ url_for('add_movement') }}" class="action-card">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Record Movement</span>
+        </a>
+        <a href="{{ url_for('report') }}" class="action-card">
+            <i class="fas fa-file-alt"></i>
+            <span>View Report</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

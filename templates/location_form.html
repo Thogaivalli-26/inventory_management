@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action }} Location - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1><i class="fas fa-warehouse"></i> {{ action }} Location</h1>
+        <p class="subtitle">{% if location %}Update location details{% else %}Add a new warehouse location{% endif %}</p>
+    </div>
+</div>
+
+<div class="form-container">
+    <form method="POST" class="form">
+        <div class="form-group">
+            <label for="location_id">Location ID <span class="required">*</span></label>
+            <input type="text" 
+                   id="location_id" 
+                   name="location_id" 
+                   class="form-control" 
+                   value="{{ location.location_id if location else '' }}" 
+                   {% if location %}readonly{% endif %}
+                   required>
+            <small class="form-help">Unique identifier for the location (e.g., WH001, STORE-A)</small>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Location Name <span class="required">*</span></label>
+            <input type="text" 
+                   id="name" 
+                   name="name" 
+                   class="form-control" 
+                   value="{{ location.name if location else '' }}" 
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" 
+                      name="address" 
+                      class="form-control" 
+                      rows="3">{{ location.address if location else '' }}</textarea>
+            <small class="form-help">Optional location address</small>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {{ action }} Location
+            </button>
+            <a href="{{ url_for('locations') }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

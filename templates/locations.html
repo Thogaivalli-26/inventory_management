@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Locations - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1><i class="fas fa-warehouse"></i> Warehouse Locations</h1>
+        <p class="subtitle">Manage your storage locations and view inventory</p>
+    </div>
+    <a href="{{ url_for('add_location') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add Location
+    </a>
+</div>
+
+{% if locations %}
+    {% for location in locations %}
+    <div class="location-card">
+        <div class="location-header">
+            <div class="location-info">
+                <h2>
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ location.name }}
+                    <span class="badge badge-success">{{ location.location_id }}</span>
+                </h2>
+                <p class="location-address">
+                    <i class="fas fa-home"></i> {{ location.address or 'No address specified' }}
+                </p>
+            </div>
+            <div class="location-actions">
+                <a href="{{ url_for('edit_location', location_id=location.location_id) }}" class="btn btn-sm btn-edit">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="{{ url_for('delete_location', location_id=location.location_id) }}" 
+                   class="btn btn-sm btn-delete" 
+                   onclick="return confirm('Are you sure you want to delete this location?')">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+            </div>
+        </div>
+
+        <div class="inventory-section">
+            <h3><i class="fas fa-boxes"></i> Current Inventory</h3>
+            {% set inventory = location_inventory[location.location_id] %}
+            {% if inventory %}
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in inventory %}
+                    <tr>
+                        <td>
+                            <strong>{{ item.name }}</strong>
+                            <small class="text-muted">{{ item.product_id }}</small>
+                        </td>
+                        <td>
+                            <span class="qty-badge qty-positive">{{ item.balance }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-inventory">
+                <i class="fas fa-box-open"></i>
+                <p>No products in this location</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-map-marked-alt"></i>
+    <h3>No Locations Yet</h3>
+    <p>Start by adding your first warehouse location</p>
+    <a href="{{ url_for('add_location') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add Your First Location
+    </a>
+</div>
+{% endif %}
+
+<style>
+    .location-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+
+    .location-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1.5rem;
+        border-bottom: 2px solid var(--border-color);
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    }
+
+    .location-info h2 {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .location-address {
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+    }
+
+    .location-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .inventory-section {
+        padding: 1.5rem;
+    }
+
+    .inventory-section h3 {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .inventory-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .inventory-table thead {
+        background: var(--bg-color);
+    }
+
+    .inventory-table th {
+        padding: 0.75rem;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .inventory-table td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .inventory-table tbody tr:hover {
+        background: #f9fafb;
+    }
+
+    .empty-inventory {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-muted);
+    }
+
+    .empty-inventory i {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.5;
+    }
+
+    .empty-inventory p {
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .location-header {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .location-actions {
+            width: 100%;
+        }
+
+        .location-actions .btn {
+            flex: 1;
+        }
+    }
+</style>
+{% endblock %}

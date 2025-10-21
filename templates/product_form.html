@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action }} Product - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1><i class="fas fa-box"></i> {{ action }} Product</h1>
+        <p class="subtitle">{% if product %}Update product details{% else %}Add a new product to inventory{% endif %}</p>
+    </div>
+</div>
+
+<div class="form-container">
+    <form method="POST" class="form">
+        <div class="form-group">
+            <label for="product_id">Product ID <span class="required">*</span></label>
+            <input type="text" 
+                   id="product_id" 
+                   name="product_id" 
+                   class="form-control" 
+                   value="{{ product.product_id if product else '' }}" 
+                   {% if product %}readonly{% endif %}
+                   placeholder="e.g., PROD001"
+                   required>
+            <small class="form-help">Unique identifier for the product (e.g., PROD001)</small>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Product Name <span class="required">*</span></label>
+            <input type="text" 
+                   id="name" 
+                   name="name" 
+                   class="form-control" 
+                   value="{{ product.name if product else '' }}"
+                   placeholder="e.g., Dell Laptop" 
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" 
+                      name="description" 
+                      class="form-control" 
+                      rows="3"
+                      placeholder="Optional product description">{{ product.description if product else '' }}</textarea>
+            <small class="form-help">Optional product description</small>
+        </div>
+
+        {% if not product %}
+        <div class="form-divider">
+            <h3><i class="fas fa-warehouse"></i> Initial Stock (Optional)</h3>
+            <p class="form-help-text">Add initial stock to a warehouse when creating the product</p>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="initial_location">Initial Warehouse</label>
+                <select id="initial_location" name="initial_location" class="form-control">
+                    <option value="">Skip - Add stock later</option>
+                    {% for location in locations %}
+                    <option value="{{ location.location_id }}">
+                        {{ location.name }} ({{ location.location_id }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <small class="form-help">Select warehouse to store initial stock</small>
+            </div>
+
+            <div class="form-group">
+                <label for="initial_qty">Initial Quantity</label>
+                <input type="number" 
+                       id="initial_qty" 
+                       name="initial_qty" 
+                       class="form-control" 
+                       value="0"
+                       min="0"
+                       placeholder="e.g., 100">
+                <small class="form-help">Number of units to add</small>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <strong>Note:</strong> You can skip the initial stock and add it later through the Movements page.
+        </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {{ action }} Product
+            </button>
+            <a href="{{ url_for('products') }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-divider {
+        margin: 2rem 0 1.5rem 0;
+        padding: 1rem;
+        background: #f0f9ff;
+        border-left: 4px solid #3b82f6;
+        border-radius: 8px;
+    }
+    
+    .form-divider h3 {
+        font-size: 1.1rem;
+        color: #1e40af;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .form-help-text {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+</style>
+{% endblock %}

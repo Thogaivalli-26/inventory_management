@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory Report - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1><i class="fas fa-chart-bar"></i> Inventory Balance Report</h1>
+        <p class="subtitle">Current stock levels across all locations</p>
+    </div>
+    <button onclick="window.print()" class="btn btn-secondary">
+        <i class="fas fa-print"></i> Print Report
+    </button>
+</div>
+
+{% if balances %}
+<div class="report-container">
+    <div class="table-container">
+        <table class="data-table report-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Warehouse</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for balance in balances %}
+                <tr>
+                    <td>
+                        <div class="product-cell">
+                            <strong>{{ balance.name }}</strong>
+                            <small class="text-muted">{{ balance.product_id }}</small>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="location-cell">
+                            <strong>{{ balance.location_name }}</strong>
+                            <small class="text-muted">{{ balance.location_id }}</small>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="qty-badge {% if balance.balance > 0 %}qty-positive{% elif balance.balance < 0 %}qty-negative{% else %}qty-zero{% endif %}">
+                            {{ balance.balance }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-summary">
+        <div class="summary-card">
+            <i class="fas fa-boxes"></i>
+            <div>
+                <h3>{{ balances|length }}</h3>
+                <p>Product-Location Combinations</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-chart-line"></i>
+    <h3>No Data Available</h3>
+    <p>Add products, locations, and movements to generate a report</p>
+    <a href="{{ url_for('add_movement') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add Movement
+    </a>
+</div>
+{% endif %}
+{% endblock %}
